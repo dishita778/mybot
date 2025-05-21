@@ -1,0 +1,571 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+  overflow-x: hidden; /* prevents horizontal scroll */
+  width: 100%;
+}
+
+
+
+.App {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+
+}
+
+ .mental-health-mode{
+  min-height: 100vh;
+  background-color: #fff5eb;
+ }
+
+
+/* Login Container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* background-image: url('c:\Users\hp\Downloads\resized_1920x1080_2.png');
+  background-size: contain; /* Ensures the image is fully visible */
+  /* background-repeat: no-repeat; /* Prevents the image from repeating */
+  /* background-position: center; */ 
+  background-color: #f2f7f6;
+  font-family: 'tahoma';
+  font-size:17px;
+}
+
+/* Chat Layout */
+.chatbox-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ffffff;
+}
+
+/* Medibot Header */
+.medibot-header {
+  display: flex;
+  align-items: center;
+  padding:6px 10px 4px 10px;
+  background-color: white;
+  border-bottom: 1px solid #d3d3d3;
+  margin-left: 300px;
+  width:70%
+}
+
+.medibot-header h1 {
+  font-size: 38px;
+  font-weight: bold;
+  color: #3d6670;
+  margin: 0px;
+  font-family: 'lucidia';
+}
+
+.mental-health-mode .medibot-header h1{
+  color:#5E3219;
+}
+
+.medibot-icon {
+  width: 70px;
+  height: 70px;
+}
+
+
+.sidebar_menu {
+  postion:fixed;
+  /* width:-300px; */
+  width:300px;
+  
+
+}
+
+.main-chat-area {
+  flex: 1;
+  padding: 60px;
+  /* other chat layout styles */
+  background-color:#f5ecdf;
+}
+
+
+/* ChatBox */
+.chatbox {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding:50px;
+  margin-left:0px;
+  position: relative;
+  left: 30px;
+  
+}
+
+.chatbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.chatbox-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Chat History */
+/* .resonse {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 60px;
+  padding:10px;
+} */
+.response {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 80px;
+
+}
+
+/* Messages */
+.message {
+  display: flex;; 
+  flex-direction: column;
+  margin: 8px 0 8px ;
+}
+
+.message.user .message-bubble {
+  align-self: flex-end;
+  background-color: #c6e0ea;
+  color: #000000;
+  border: 1px solid #ccc; 
+  font-family: 'times new roman';
+  
+}
+
+.message.bot .message-bubble {
+  align-self: flex-start;
+  background-color:#e3efea ;
+  color: black;
+  font-family:'times new roman bold';
+  margin-left: 210px;
+}
+
+.mental-health-mode .message.bot{
+  align-self: flex-start;
+  background-color:#f5ecdf;
+  color: black;
+  font-family:'times new roman bold';
+  margin-left:0px;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+/* Input Bar */
+.input-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: inherit;
+  position:fixed;
+  bottom: 0;
+  width: 70%; /* Spans the full width of the page */
+  margin-left:225px;
+  z-index: 100;
+}
+
+input, select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  flex: 1;
+}
+
+/* Buttons */
+button {
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color:#3d6670;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 8px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3d6670;
+}
+
+/* Light Blue Button */
+.blue-btn {
+  background-color:#3d6670;
+  color: white;
+  padding: 10px 20px;
+  border: white;
+  margin-top: 8px;
+  transition: background-color 0.3s ease;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+
+}
+
+.blue-btn:hover {
+  background-color: #3d6670;
+}
+
+/* Toggle Button */
+.toggle-btn {
+  background-color:#3d6670 ;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.toggle-btn:hover {
+  background-color: #3d6670;
+}
+
+/* Auth Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form h2 {
+  margin-bottom: 24px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.auth-form input {
+  /* width: 100%; */
+  padding: 12px;
+  margin-bottom: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Logout Button */
+/* .logout-btn {
+  margin: 20px;
+  align-self: flex-end;
+} */
+.logout-btn {
+  position: absolute; /* Allows positioning relative to the parent container */
+  top: 20px; /* Adjust the vertical position */
+  right: 20px; /* Adjust the horizontal position */
+  background-color: #3d6670;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #3d6670;
+ }
+
+/* Google Button */
+.google-btn {
+  background-color:#3d6670;
+  color: white;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.google-btn:hover {
+  background-color:#3d6670 ;
+}
+
+/* Register Link Button */
+.register-link {
+  background-color: #3d6670;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.register-link:hover {
+  background-color: #3d6670;
+}
+
+/* Buttons near Chat Header */
+
+/* .switch-btn {
+  background-color: #8ecae6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.switch-btn:hover {
+  background-color: #219ebc;
+}
+
+.mental-health-btn {
+  background-color: #8ecae6;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.mental-health-btn:hover {
+  background-color: #219ebc;
+} */
+
+/* Toggle Switch */
+.switch {
+position: relative;
+display: inline-block;
+width: 44px;
+height: 24px;
+margin-left:300px;
+margin-top:10px;
+}
+
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0; left: 0; right: 0; bottom: 0;
+background-color: #ccc;
+transition: 0.4s;
+border-radius: 24px;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 18px;
+width: 18px;
+left: 3px;      /* Adjusted for new width */
+bottom: 3px;
+background-color: white;
+transition: 0.4s;
+border-radius: 50%;
+}
+
+input:checked + .slider {
+background-color: #219ebc;
+}
+
+input:checked + .slider:before {
+transform: translateX(20px);
+}
+
+/* Styling for Default (Medical) mode */
+.medical-mode {
+  background-color: #ffffff; /* White background */
+  color: #000000; /* Black text */
+}
+
+/* Styling for Mental Health mode */
+.mental-health-mode {
+  background-color: #d3c4ce; /* Light green background */
+  color:#5E3219 ; /* Darker text */
+  font-family: 'times new roman';
+
+}
+
+.chat-main {
+display: flex;
+flex-direction: column; /* Ensures proper layout for child elements */
+height: 100vh; /* Full viewport height */
+width: 100vw; /* Full viewport width */
+background-size: cover; /* Ensures the background image covers the entire area */
+background-position: center; /* Centers the background image */
+background-color: #ffffff; /* Fallback background color */
+}
+
+.mode-label{
+  font-size: 20px;
+  color: grey; /* Black text for the label */
+  margin-left: 10px; /* Space between the switch and the label */
+  font-family: 'times new roman';
+  font-weight: bold; /* Makes the label bold */
+  border: #000000;
+}
+
+
+.mental-health-mode .medibot-header {
+  background-color: #f5ecdf;
+  border-bottom: 1px solid black;
+  color:#5E3219;
+}
+
+.mental-health-mode .slider {
+  background-color:#A67B5B ; 
+}
+
+.mental-health-mode input:checked + .slider {
+  background-color: #A67B5B; /* Changes the slider when toggled */
+}
+
+
+
+
+.chatbox.mental-health-mode {
+  background-color: #f5ecdf; 
+}
+
+/* .mental-health-mode .input-bar select,
+.mental-health-mode .input-bar input,
+.mental-health-mode .input-bar button {
+  background-color: green;
+  border: 1px solid green;
+} */ */
+
+ /* .mental-health-mode .medibot-header h1{
+  color:#5E3219;
+ } */
+
+ .mental-health-mode .medibot-header h1 {
+  color: #5E3219 !important;
+}
+
+.mental-health-mode .response {
+  background-color: #f5ecdf;
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 100%;
+}
+
+/* .mental-health-mode.chatbox.undefined:{
+  background-color:#f5ecdf;
+  color:#f5ecdf; */
+
+
+/* }
+
+/* .chatbox.undefined {
+  background-color: #ffffff; /* Default white background for undefined mode */
+  color: #000000; /* Default black text for undefined mode */
+*/ */
+
+.mental-health-mode .input-bar{
+  background-color: #f5ecdf
+
+}
+
+.mental-health-mode .switch{
+  background-color:#f5ecdf; 
+
+}
+
+.mental-health-mode .mode-label {
+  color: #A67B5B; /* Color for mental health mode */
+  font-family: 'Times new roman'; /* Optional: Change font for mental health mode */
+}
+
+.mental-health-mode .chat-main{
+  background-color:#f5ecdf;
+  height: 100vh;
+
+  
+}
+
+.mental-health-mode .medibot-icon{
+  color: green;
+}
+
+
+
+
+
+
+.mental-health-mode .blue-btn{
+  background-color:#A67B5B;
+  color:white;
+}
+
+.mental-input-bar {
+  background-color:#f5ecdf
+}
+
+.mental-health-mode .mode-label{
+  color:#A67B5B;
+}
+
+
+
+.chat-main {
+  min-height: 100vh; /* Ensures the container spans the full height */
+}
+
+
+.page-wrapper {
+  min-height:100%; /* Ensures the wrapper spans the full viewport height */
+  background-color: #f5ecdf; /* Background color for the page */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+}
+
+.page-wrapper > main{
+  flex: 1;
+}
+
+.mental-health-mode .page-wrapper {
+  background-color: #f5ecdf; /* Background color for mental health mode */
+  min-height: 100vh;
+}
