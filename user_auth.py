@@ -1,13 +1,17 @@
 import mysql.connector
 import hashlib
 import re
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 def get_db_connection():
     try:
         conn = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="Topperguddan@26",
-            database="chatbot"
+            host=os.environ.get("MYSQL_HOST"),
+            user=os.environ.get("MYSQL_USER"),
+            password=os.environ.get("MYSQL_PASSWORD"),
+            database=os.environ.get("MYSQL_DATABASE")
         )
         return conn
     except mysql.connector.Error as err:
@@ -38,12 +42,12 @@ def register_user(name, email, password):
 
     cursor = conn.cursor(buffered=True, dictionary=True)
 
-    # Check if the email is already registered
+    
     try:
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
         user = cursor.fetchone()
         if user:
-            # If the user exists and is an OAuth user, allow login
+            
             if password == "google_oauth_dummy_password" and user["password"] == "google_oauth_dummy_password":
                 return True, "User logged in successfully"
             else:
@@ -51,7 +55,7 @@ def register_user(name, email, password):
     except Exception as e:
         return False, f"Error checking user: {str(e)}"
 
-    # Skip password validation for Google OAuth users
+    
     if password != "google_oauth_dummy_password":
         password_valid, password_error = is_valid_password(password)
         if not password_valid:
