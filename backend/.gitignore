@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual env
+venv/
+.env
+.env.*
+
+# Logs
+*.log
+
+# Vector stores (FAISS)
+vectorstore/
+
+# Data files
+dataaa/
+mental_health_data/
+
+# Secrets
+client_secret.json
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Node (if frontend later)
+node_modules/
