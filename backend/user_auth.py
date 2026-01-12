@@ -1,14 +1,16 @@
 import mysql.connector
 import hashlib
 import re
+import os
 def get_db_connection():
     try:
         conn = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="Topperguddan@26",
-            database="chatbot"
+            host=os.getenv("MYSQLHOST"),
+            user=os.getenv("MYSQLUSER"),
+            password=os.getenv("MYSQLPASSWORD"),
+            database=os.getenv("MYSQLDATABASE"),
         )
+
         return conn
     except mysql.connector.Error as err:
         print(f"Database connection failed: {err}")
@@ -38,12 +40,12 @@ def register_user(name, email, password):
 
     cursor = conn.cursor(buffered=True, dictionary=True)
 
-    # Check if the email is already registered
+    
     try:
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
         user = cursor.fetchone()
         if user:
-            # If the user exists and is an OAuth user, allow login
+         
             if password == "google_oauth_dummy_password" and user["password"] == "google_oauth_dummy_password":
                 return True, "User logged in successfully"
             else:
@@ -51,7 +53,7 @@ def register_user(name, email, password):
     except Exception as e:
         return False, f"Error checking user: {str(e)}"
 
-    # Skip password validation for Google OAuth users
+
     if password != "google_oauth_dummy_password":
         password_valid, password_error = is_valid_password(password)
         if not password_valid:
@@ -92,5 +94,23 @@ def authenticate(identifier, password):
     finally:
         cursor.close()
         conn.close()
+
+
+def get_user_by_email(email):
+    conn = get_db_connection()
+    if conn is None:
+        return None
+
+    cursor = conn.cursor(dictionary=True)
+    try:
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        return cursor.fetchone()
+    except Exception as e:
+        print(f"Fetch user error: {e}")
+        return None
+    finally:
+        cursor.close()
+        conn.close()
+
 
 
