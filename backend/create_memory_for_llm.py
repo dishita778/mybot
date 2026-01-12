@@ -1,45 +1,78 @@
 
+import os
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-import os
 
-DATA_PATH = "dataaa/"
+
+MEDICAL_DATA_PATH = "dataaa/"
 MENTAL_HEALTH_DATA_PATH = "mental_health_data/"
 
+VECTORSTORE_DIR = "vectorstore"
+MEDICAL_DB_FAISS_PATH = os.path.join(VECTORSTORE_DIR, "db_faiss")
+MENTAL_HEALTH_DB_FAISS_PATH = os.path.join(VECTORSTORE_DIR, "mental_health_db_faiss")
+
+os.makedirs(VECTORSTORE_DIR, exist_ok=True)
+
 def load_pdf_files(folder_path):
-    loader = DirectoryLoader(folder_path, glob='*.pdf', loader_cls=PyPDFLoader)
-    raw_docs = loader.load()
-    for doc in raw_docs:
-        doc.metadata["source"] = doc.metadata.get("source", doc.metadata.get("file_path", "Unknown"))
-    return raw_docs
+    if not os.path.exists(folder_path):
+        raise FileNotFoundError(f"Folder not found: {folder_path}")
 
-medical_documents = load_pdf_files(DATA_PATH)
+    loader = DirectoryLoader(
+        folder_path,
+        glob="*.pdf",
+        loader_cls=PyPDFLoader
+    )
 
+    docs = loader.load()
+
+    for doc in docs:
+        doc.metadata["source"] = doc.metadata.get(
+            "source",
+            doc.metadata.get("file_path", "Unknown")
+        )
+
+    return docs
+
+
+medical_documents = load_pdf_files(MEDICAL_DATA_PATH)
 mental_health_documents = load_pdf_files(MENTAL_HEALTH_DATA_PATH)
 
-def create_chunks(extracted_data):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-    text_chunks = text_splitter.split_documents(extracted_data)
-    return text_chunks
 
-medical_text_chunks = create_chunks(medical_documents)
-mental_health_text_chunks = create_chunks(mental_health_documents)
 
+def create_chunks(documents):
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=500,
+        chunk_overlap=50
+    )
+    return splitter.split_documents(documents)
+
+
+medical_chunks = create_chunks(medical_documents)
+mental_health_chunks = create_chunks(mental_health_documents)
 
 def get_embedding_model():
-    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    return embedding_model
+    return HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
+
 
 embedding_model = get_embedding_model()
 
-DB_FAISS_PATH = "vectorstore/db_faiss"
-db_medical = FAISS.from_documents(medical_text_chunks, embedding_model)
-db_medical.save_local(DB_FAISS_PATH)
+
+print("Creating medical FAISS vectorstore...")
+medical_db = FAISS.from_documents(medical_chunks, embedding_model)
+medical_db.save_local(MEDICAL_DB_FAISS_PATH)
+
+print("Medical vectorstore saved at:", MEDICAL_DB_FAISS_PATH)
 
 
-# Step 4: Store Mental Health embeddings in FAISS
-MH_DB_FAISS_PATH = "vectorstore/mental_health_db_faiss"
-db_mental_health = FAISS.from_documents(mental_health_text_chunks, embedding_model)
-db_mental_health.save_local(MH_DB_FAISS_PATH)
+print("Creating mental health FAISS vectorstore...")
+mental_health_db = FAISS.from_documents(mental_health_chunks, embedding_model)
+mental_health_db.save_local(MENTAL_HEALTH_DB_FAISS_PATH)
+
+print("Mental health vectorstore saved at:", MENTAL_HEALTH_DB_FAISS_PATH)
+
+print("Vectorstores created successfully.")
+
