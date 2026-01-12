@@ -3,9 +3,9 @@ import axios from "axios";
 import "../styles/app.css";
 
 const AuthForm = ({ onLoginSuccess }) => {
-  const [mode, setMode] = useState("login"); // login or register
+  const [mode, setMode] = useState("login"); 
   const [name, setName] = useState("");
-  const [identifier, setIdentifier] = useState(""); // email or username
+  const [identifier, setIdentifier] = useState(""); 
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
@@ -22,17 +22,17 @@ const AuthForm = ({ onLoginSuccess }) => {
       );
 
       if (res.data.success) {
-        setMessage("✅ " + res.data.message);
+        setMessage(" " + res.data.message);
         onLoginSuccess();
       } else {
-        setMessage("❌ " + res.data.message);
+        setMessage(" " + res.data.message);
       }
     } catch (error) {
       console.error(error);
       if (error.response && error.response.data.error) {
-        setMessage("❌ " + error.response.data.error);
+        setMessage(" " + error.response.data.error);
       } else {
-        setMessage("❌ Something went wrong.");
+        setMessage(" Something went wrong.");
       }
     }
   };
@@ -76,8 +76,7 @@ const AuthForm = ({ onLoginSuccess }) => {
 
         {message && <p style={{ color: "crimson" }}>{message}</p>}
 
-        {/* <div className="register-link">
-          {mode === "login" ? "New user?" : "Already have an account?"}{" "} */}
+        {}
           <button
             type="button"
             onClick={() => setMode(mode === "login" ? "Register" : "login")}
@@ -85,7 +84,7 @@ const AuthForm = ({ onLoginSuccess }) => {
           >
             {mode === "login" ? "Register/Sign up" : "Login"}
           </button>
-        {/* </div> */}
+        {}
 
         <button type="button" onClick={handleGoogleLogin} className="blue-btn google-btn">
           Continue with Google
