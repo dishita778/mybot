@@ -1,4 +1,3 @@
-
 from flask import Blueprint, request, jsonify, redirect, url_for, session
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
